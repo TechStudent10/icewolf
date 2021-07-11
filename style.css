@@ -1,0 +1,51 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	overflow: hidden;
+}
+
+.view {
+	margin-top: 50px;
+	height: 100vh;
+	/*margin-bottom: auto;*/
+}
+
+.tabs {
+	width: 100vw;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: white;
+	display: flex;
+}
+
+.tab {
+	cursor: pointer;
+	height: 50px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	background-color: gray;
+}
+
+*::-webkit-scrollbar {
+	width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}

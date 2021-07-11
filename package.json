@@ -1,0 +1,17 @@
+{
+  "name": "electronbrowser",
+  "version": "1.0.0",
+  "description": "web browser go brrr",
+  "main": "main.js",
+  "author": "me",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^13.1.6"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron-tabs": "^0.15.0"
+  }
+}
