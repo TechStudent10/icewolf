@@ -2,16 +2,76 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>IceWolf</title>
 		<link rel="stylesheet" type="text/css" href="./style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="shortcut" href="./logo-transparent.png">
 	</head>
 	<body>
-		<div class="tabs">
-			<!-- <div class="tab" id='tab-0' role="button">Test</div> -->
+		<div class="navbar">
+			<header class="titlebar">
+				<div class="tabs">
+					<div class="space">
+						<hr>
+					</div>
+				</div>
+				<div class="win-controls">
+					<div class="win-control" id='minimize-button'>
+						<i class="fas fa-window-minimize"></i>
+					</div>
+					<div class="win-control" id='maximize-restore-button'>
+						<i class="far fa-square"></i>
+					</div>
+					<div class="win-control" id='close-button'>
+						<i class="fas fa-times"></i>
+					</div>
+				</div>
+			</header>
+			<div class="addressBar">
+				<div class="nav-buttons">
+					<a class='nav-button' id='back-button' accesskey="b">
+						<i class="fas fa-arrow-left"></i>
+					</a>
+					<a class='nav-button' id='forward-button' accesskey="f">
+						<i class="fas fa-arrow-right"></i>
+					</a>
+					<a class="nav-button" id='refresh-button' accesskey="r">
+						<i class="fas fa-sync-alt"></i>
+					</a>
+				</div>
+				<div class="address">
+					<div class="loading-bar">
+						<input type="text" name="address" id='address' placeholder="Search for something!">
+					</div>
+				</div>
+				<div class="options">
+					<div class="options-button">
+						<i class="fas fa-ellipsis-v"></i>
+					</div>
+					<div class="options-dropdown">
+						<a>idk</a>
+						<a>idk</a>
+						<a>why</a>
+						<a>idk</a>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="webview">
-			<webview src="https://google.com" class="view" id='webview'></webview>
+		<div class="webview" id='webviews'>
+			<!-- <div class="menu">
+				<ul class="menu-options">
+					<li class="menu-option">Back</li>
+					<li class="menu-option">Reload</li>
+					<li class="menu-option">Save</li>
+					<li class="menu-option">Save As</li>
+					<li class="menu-option">Inspect</li>
+				</ul>
+			</div> -->
+			<webview useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.67" src="file:///local-ntp.html" class="view" id='webview-base'></webview>
 		</div>
+		<link rel="stylesheet" type="text/css" href="./style.css">
+		<script type="text/javascript" src="./scripts/shortcut.js"></script>
 		<script type="text/javascript" src="./renderer.js"></script>
+		<!-- <script type="text/javascript" src="./preload.js"></script> -->
 	</body>
 </html>

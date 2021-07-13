@@ -1,17 +1,20 @@
 {
-  "name": "electronbrowser",
+  "name": "icewolf",
   "version": "1.0.0",
   "description": "web browser go brrr",
   "main": "main.js",
-  "author": "me",
+  "author": "TechStudent11",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^13.1.6"
+    "electron": "^13.1.6",
+    "electron-builder": "^22.11.7"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder",
+    "release": "electron-builder --publish=always"
   },
   "dependencies": {
-    "electron-tabs": "^0.15.0"
+    "@electron/remote": "^1.2.0"
   }
 }

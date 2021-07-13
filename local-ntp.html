@@ -3,8 +3,80 @@
 	<head>
 		<meta charset="utf-8">
 		<title>New Tab</title>
+		<style type="text/css">
+			@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+			body {
+				background: hsl(0, 2%, 75%);
+				font-family: 'Open Sans', sans-serif;
+			}
+
+			.main {
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+
+			.input {
+				border-radius: 25rem;
+				background-color: hsl(0, 2%, 65%);
+				padding: 5px;
+			}
+
+			.input input {
+				border: none;
+				background-color: inherit;
+			}
+
+			.input input:focus {
+				outline: none;
+			}
+
+			#go {
+				cursor: pointer;
+				font-weight: 300;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>New Tab</h1>
+		<div class="main">
+			<h1>New Tab</h1>
+			<div class="input">
+				<input type="text" placeholder="Hey let's search!" id='url'>
+			</div>
+			<br>
+			<a id='go'>GO!</a>
+		</div>
+		<script type="text/javascript">
+			function isURL(str) {
+			    let pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+			        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+			        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+			        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+			        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+			        '(\\#[-a-z\\d_]*)?$','i') // fragment locator
+			    return !!pattern.test(str)
+			}
+			const go = (e) => {
+				const url = document.getElementById('url')
+				const url_value = url.value
+				let value
+				if (isURL(url_value)) {
+					value = url.value
+				} else {
+					value = `https://www.google.com/search?q=${url_value}`
+				}
+
+				window.location = value
+			}
+			document.getElementById('go').addEventListener('click', go)
+			document.getElementById('url').addEventListener('keydown', (e) => {
+				if (e.keyCode == 13) {
+					go()
+				}
+			})
+		</script>
 	</body>
 </html>
