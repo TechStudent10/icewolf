@@ -1,3 +1,4 @@
+![Icewolf Logo](/images/logo-transparent.png)
 # Icewolf
 The open-source web browser
 
