@@ -1,3 +1,7 @@
 node_modules/
 yarn-error.log
-icons/
+_icons/
+dist/
+gh_token.txt
+secrets*
+secrets*/

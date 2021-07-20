@@ -1,6 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
+if (app.isPackaged) {
+	require('electron-reloader')(module)
+}
+
 let win
 
 function createWindow() {
@@ -8,7 +12,7 @@ function createWindow() {
 		width: 800,
 		height: 600,
 		hasShadow: true,
-		icon: './logo-transparent.png',
+		icon: './images/logo-transparent.png',
 		webPreferences: {
 			nodeIntegration: true,
 			webviewTag: true,

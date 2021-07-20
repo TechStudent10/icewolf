@@ -1,21 +1,25 @@
-/* Set margin and padding to 0 for whole page. */
+/* Import the font(s) */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+/* Set margin and padding to 0 for whole page and change the font. */
 * {
 	margin: 0;
 	padding: 0;
+	font-family: 'Open Sans', sans-serif;
 }
 
 /* Define some global variables */
 :root {
 	--tabsHeight: 20px;
 	--addressBarHeight: 50px;
-	--navbarHeight: calc(var(--tabsHeight) + var(--addressBarHeight));
+	--bookmarkBarHeight: 40px;
+	--navbarHeight: calc(var(--tabsHeight) + var(--addressBarHeight) + var(--bookmarkBarHeight));
 }
 
 /* Set overflow to hidden for entire page. */
 html,
 body {
 	overflow: hidden;
-	border-radius: 2rem;
 }
 
 /* Set the webview-base to display: none by default */
@@ -24,10 +28,19 @@ body {
 }
 
 /* Styles for webviews */
+.view {
+	height: 100%;
+}
+
 .view,
 .webview {
 	margin-top: var(--navbarHeight);
 	height: calc(100vh - var(--navbarHeight));
+}
+
+.fullscreen {
+	margin: 0;
+	height: 100vh;
 }
 
 /* Styles for the navbar */
@@ -173,6 +186,12 @@ body {
 	border-radius: 25rem;
 	width: calc(100% - 150px);
 	text-align: center;
+	display: flex;
+	justify-content: space-between;
+}
+
+.address .loading-bar {
+	width: inherit;
 }
 
 /* Styles for when the loading bar is animated */
@@ -188,6 +207,8 @@ body {
 .address input {
 	border: none;
 	width: calc(100% - 30px);
+	padding-left: 20px;
+	/* width: 100%; */
 	background-color: inherit;
 }
 
@@ -235,6 +256,8 @@ body {
 	left: 0;
 	/*top: 0;*/
 	padding-right: 50px;
+	box-shadow: -1 1 10 black;
+	background-color: white;
 }
 
 /* Visible style */
@@ -242,8 +265,43 @@ body {
 	display: block;
 }
 
+/* Styles for the bookmark bar */
+.bookmarks {
+	display: flex;
+	text-align: center;
+	height: var(--bookmarkBarHeight);
+}
+
+.bookmarks .space {
+	width: 7px;
+}
+
+/* Styles for the individual bookmark buttons */
+.bookmark {
+	cursor: pointer;
+	border-radius: 5px;
+	padding: 1px;
+	background-color: inherit;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: calc(var(--addressBarHeight) / 2);
+	transition: background-color 0.1s ease-in-out;
+}
+
+.bookmark:hover {
+	background-color: hsl(0, 7%, 68%);
+}
+
+/* Styles for bookmark button */
+#bookmark-button {
+	padding-right: 10px;
+	cursor: pointer;
+}
+
 /* Animation for loading bar */
-@keyframes loading-bar {
+/* @keyframes loading-bar {
 	10% {
 		width: 10%;
 	}
@@ -272,6 +330,15 @@ body {
 		width: 90%;
 	}
 	100% {
+		width: 100%;
+	}
+} */
+@keyframes loading-bar {
+	from {
+		width: 10%;
+	}
+
+	to {
 		width: 100%;
 	}
 }

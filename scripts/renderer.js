@@ -1,9 +1,18 @@
 const { app, BrowserWindow } = require('@electron/remote')
+const storage = require('electron-json-storage')
+const path = require('path')
+const {
+    v4: uuidv4
+} = require('uuid')
+
+storage.setDataPath(path.join(__dirname, 'bookmarks'))
+
+const newTabUrl = 'file:///icewolf/local-ntp.html'
 
 let tabs = [
     {
         index: 0,
-        url: 'file:///local-ntp.html',
+        url: newTabUrl,
         title: 'New Tab'
     }
 ]
@@ -24,6 +33,10 @@ const minimizeButton = document.getElementById('minimize-button')
 const maximizeRestoreButton = document.getElementById('maximize-restore-button')
 const optionsDropdown = document.querySelector('.options-dropdown')
 const optionsButton = document.querySelector('.options-button')
+const navbar = document.querySelector('.navbar')
+const bookmarkSpace = document.querySelector('.bookmarks .space')
+const bookmarks = document.querySelector('.bookmarks')
+const bookmarkButton = document.getElementById('bookmark-button')
 
 let current_index = 0
 
@@ -63,6 +76,10 @@ const createNewTab = (index, url, title) => {
         webview.style.display = 'flex'
         address.value = currentTab.url
     })
+    webview.addEventListener('new-window', (e) => {
+        const url = e.url
+        createNewTab(tabs.length, url, 'New Tab')
+    })
     webview.addEventListener('did-start-loading', (event) => {
         loadingBar.classList.add('animate')
     })
@@ -75,10 +92,20 @@ const createNewTab = (index, url, title) => {
         if (current_index == index) {
             address.value = url
         }
-        if (url == 'file:///local-ntp.html') {
+        if (url == newTabUrl) {
             address.value = ''
         }
         loadingBar.classList.remove('animate')
+    })
+    webview.addEventListener('enter-html-full-screen', (e) => {
+        navbar.style.display = 'none'
+        webview.classList.add('fullscreen')
+        webviews.classList.add('fullscreen')
+    })
+    webview.addEventListener('leave-html-full-screen', (e) => {
+        navbar.style.display = 'block'
+        webview.classList.remove('fullscreen')
+        webviews.classList.remove('fullscreen')
     })
 
     webviews.appendChild(webview)
@@ -108,6 +135,19 @@ const close_tab = (index) => {
     document.getElementById(`webview-${index}`).remove()
 }
 
+const createBookmark = (title, url) => {
+    const bookmark_element = document.createElement('div')
+    bookmark_element.classList.add('bookmark')
+    bookmark_element.innerHTML = title
+    bookmark_element.addEventListener('click', (e) => {
+        document.getElementById(`webview-${current_index}`).loadURL(url)
+    })
+    
+    bookmarks.innerHTML = ''
+    bookmarks.appendChild(bookmark_element)
+    bookmarks.appendChild(bookmarkSpace.cloneNode(true))
+}
+
 tabs.map((tab) => {
     createNewTab(tab.index, tab.url, tab.title)
 })
@@ -119,11 +159,11 @@ tab.innerHTML = '<i class="fas fa-plus"></i>'
 tab.addEventListener('click', (event) => {
     tabs = [...tabs, {
         index: tabs.length,
-        url: 'file:///local-ntp.html',
+        url: newTabUrl,
         title: 'New Tab'
     }]
     current_index = tabs.length - 1
-    createNewTab(current_index, 'file:///local-ntp.html', 'New Tab')
+    createNewTab(current_index, newTabUrl, 'New Tab')
     document.getElementById(`webview-${current_index}`).style.display = 'block'
     tabs_dom.removeChild(tab)
     tabs_dom.appendChild(tab)
@@ -155,7 +195,11 @@ address.addEventListener('keydown', (event) => {
         const value = address.value
         let url
         if (isURL(value)) {
-            url = value
+            if (!value.startsWith('http')) {
+                url = `http://${value}`
+            } else {
+                url = value
+            }
         } else {
             url = `https://www.google.com/search?q=${value}`
         }
@@ -231,6 +275,22 @@ shortcut.add('control+w', () => {
     close_tab(current_index)
 })
 
+let inspect_shortcut
+if (app.isPackaged) {
+    inspect_shortcut = 'control+shift+i'
+} else {
+    inspect_shortcut = 'control+shift+j'
+}
+
+shortcut.add(inspect_shortcut, () => {
+    const webview = document.getElementById(`webview-${current_index}`)
+    if (webview.isDevToolsOpened()) {
+        webview.closeDevTools()
+    } else {
+        webview.openDevTools()
+    }
+})
+
 // Add events for when app is selected and not
 app.on('browser-window-focus', () => {
     const current_tab = document.getElementById(`tab-${current_index}`)
@@ -243,4 +303,43 @@ app.on('browser-window-blur', () => {
     if (!current_tab.classList.contains('window-inactive')) {
         current_tab.classList.add('window-inactive')
     }
+})
+
+// Adding bookmarks to the bookmark bar
+storage.getAll((error, data) => {
+    if (error) throw error
+
+    if (Object.keys(data).length == 0) {
+        bookmarks.innerHTML = 'No Bookmarks Found!'
+    }
+    Object.keys(data).map((key) => {
+        const bookmark = data[key]
+        createBookmark(bookmark.title, bookmark.url)
+    })
+})
+
+// Add click event to the bookmark button
+bookmarkButton.addEventListener('click', (e) => {
+    const webview = document.getElementById(`webview-${current_index}`)
+    let url = webview.getURL()
+    let title = webview.getTitle()
+    let count;
+    let bookmarkExists = false
+
+    console.log(
+        `
+        URL: ${url}\n
+        Title: ${title}
+    `)
+
+    storage.set(`${uuidv4()}`, {
+        url: url,
+        title: title
+    }, (error) => {
+        if (error) throw error
+
+        console.log("PLEASE WORK")
+    })
+
+    createBookmark(title, url)
 })

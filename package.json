@@ -7,14 +7,17 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^13.1.6",
-    "electron-builder": "^22.11.7"
+    "electron-builder": "^22.11.7",
+    "electron-reloader": "^1.2.1"
   },
   "scripts": {
-    "start": "electron .",
+    "start": "electron --trace-warnings .",
     "build": "electron-builder",
     "release": "electron-builder --publish=always"
   },
   "dependencies": {
-    "@electron/remote": "^1.2.0"
+    "@electron/remote": "^1.2.0",
+    "electron-json-storage": "^4.5.0",
+    "uuid": "^8.3.2"
   }
 }
