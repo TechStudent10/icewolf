@@ -143,7 +143,7 @@ const createBookmark = (title, url) => {
         document.getElementById(`webview-${current_index}`).loadURL(url)
     })
     
-    bookmarks.innerHTML = ''
+    if (bookmarks.innerHTML == 'No Bookmarks Found!') bookmarks.innerHTML = ''
     bookmarks.appendChild(bookmark_element)
     bookmarks.appendChild(bookmarkSpace.cloneNode(true))
 }

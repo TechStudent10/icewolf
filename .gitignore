@@ -5,3 +5,5 @@ dist/
 gh_token.txt
 secrets*
 secrets*/
+bookmarks/
+_bookmarks.json

@@ -1,4 +1,5 @@
-![Icewolf Logo](/images/logo-transparent.png)
+<div style="text-align:center;"><img src="https://github.com/TechStudent11/icewolf/blob/master/images/logo-transparent.png" alt="logo"></div>
+
 # Icewolf
 The open-source web browser
 
