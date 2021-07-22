@@ -98,7 +98,7 @@ body {
 
 /* Styles for the navbar */
 .navbar {
-	text-select: none;
+	user-select: none;
 }
 
 /* Styles for drag region */

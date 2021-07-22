@@ -6,6 +6,8 @@
 	</head>
 	<body>
 		<button id="alert-btn" onclick="alert(`${this.id} was clicked.`)">Alert</button>
-		<button id="confirm-btn" onclick="confirm(`${this.id} was clicked.`)">Confirm</button>
+		<button id="confirm-btn" onclick="console.log(
+			confirm(`${this.id} was clicked. Ok?`)
+		)">Confirm</button>
 	</body>
 </html>

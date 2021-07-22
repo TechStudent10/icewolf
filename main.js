@@ -3,6 +3,7 @@ const path = require('path')
 
 if (app.isPackaged) {
 	require('electron-reloader')(module)
+	require('update-electron-app')()
 }
 
 let win

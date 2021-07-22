@@ -7,7 +7,7 @@ const {
 
 storage.setDataPath(path.join(__dirname, 'bookmarks'))
 
-const newTabUrl = 'file:///icewolf/local-ntp.html'
+const newTabUrl = 'icewolf://local-ntp.html'
 
 let tabs = [
     {
@@ -92,6 +92,10 @@ const createNewTab = (index, url, title) => {
         if (current_index == index) {
             address.value = url
         }
+        console.log(url.substring(0, 15))
+        if (url.substring(0, 15) == 'file:///icewolf') {
+            address.value = `icewolf://${address.value.substring(16)}`
+        }
         if (url == newTabUrl) {
             address.value = ''
         }
@@ -143,7 +147,7 @@ const createBookmark = (title, url) => {
         document.getElementById(`webview-${current_index}`).loadURL(url)
     })
     
-    if (bookmarks.innerHTML == 'No Bookmarks Found!') bookmarks.innerHTML = ''
+    if (bookmarks.innerHTML == '<div style="padding-left:10px;">No Bookmarks Found!</div>') bookmarks.innerHTML = ''
     bookmarks.appendChild(bookmark_element)
     bookmarks.appendChild(bookmarkSpace.cloneNode(true))
 }
@@ -192,9 +196,13 @@ refreshButton.addEventListener('click', (event) => {
 // Add keydown event to input
 address.addEventListener('keydown', (event) => {
     if (event.keyCode == 13) {
-        const value = address.value
+        let value = address.value
         let url
-        if (isURL(value)) {
+        if (value.startsWith('icewolf://')) {
+            value = value.substring(10)
+            url = `file:///icewolf/${value}`
+        }
+        else if (isURL(value)) {
             if (!value.startsWith('http')) {
                 url = `http://${value}`
             } else {
@@ -310,7 +318,7 @@ storage.getAll((error, data) => {
     if (error) throw error
 
     if (Object.keys(data).length == 0) {
-        bookmarks.innerHTML = 'No Bookmarks Found!'
+        bookmarks.innerHTML = '<div style="padding-left:10px;">No Bookmarks Found!</div>'
     }
     Object.keys(data).map((key) => {
         const bookmark = data[key]
