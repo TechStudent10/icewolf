@@ -2,8 +2,9 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
 if (app.isPackaged) {
-	require('electron-reloader')(module)
 	require('update-electron-app')()
+} else {
+	require('electron-reloader')(module)
 }
 
 let win
