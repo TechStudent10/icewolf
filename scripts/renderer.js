@@ -17,6 +17,9 @@ let tabs = [
     }
 ]
 
+let newTabButtonHasBeenCreated = false
+// This is here to prevent new tab buttons from being created AFTER a new tab has been created.
+
 const win = BrowserWindow.getFocusedWindow()
 
 const tabs_dom = document.querySelector('.tabs')
@@ -37,6 +40,7 @@ const navbar = document.querySelector('.navbar')
 const bookmarkSpace = document.querySelector('.bookmarks .space')
 const bookmarks = document.querySelector('.bookmarks')
 const bookmarkButton = document.getElementById('bookmark-button')
+const newTabButton = document.querySelector('.newTabButton')
 
 let current_index = 0
 
@@ -52,6 +56,10 @@ const createNewTab = (index, url, title) => {
     const tab = document.createElement('div')
     const webview = webviewBase.cloneNode(true)
 
+    let new_url = url.replace('icewolf://', 'file:///icewolf/')
+    let old_url = url
+    url = new_url
+
     // Setup tab button
     tab.role = 'button'
     tab.id = `tab-${index}`
@@ -66,6 +74,7 @@ const createNewTab = (index, url, title) => {
     // webview.style.display = 'none'
     webview.id = `webview-${index}`
     webview.classList = ['view']
+    url = old_url
 
     tab.addEventListener('click', (event) => {
         document.getElementById(`webview-${current_index}`).style.display = 'none'
@@ -75,10 +84,16 @@ const createNewTab = (index, url, title) => {
         let currentTab = getCurrentTab()
         webview.style.display = 'flex'
         address.value = currentTab.url
-    })
-    webview.addEventListener('new-window', (e) => {
-        const url = e.url
-        createNewTab(tabs.length, url, 'New Tab')
+
+        webview.addEventListener('new-window', (e) => {
+            // const space = tabSpace.cloneNode(true)
+            // space.classList.add('tab-space')
+            // tabs_dom.appendChild(space)
+            
+            const url = e.url
+            createNewTab(tabs.length, url, 'New Tab')
+            updateTabs()
+        })
     })
     webview.addEventListener('did-start-loading', (event) => {
         loadingBar.classList.add('animate')
@@ -100,6 +115,9 @@ const createNewTab = (index, url, title) => {
             address.value = ''
         }
         loadingBar.classList.remove('animate')
+
+        // Add custom JavaScript APIs for Icewolf
+        
     })
     webview.addEventListener('enter-html-full-screen', (e) => {
         navbar.style.display = 'none'
@@ -112,6 +130,10 @@ const createNewTab = (index, url, title) => {
         webviews.classList.remove('fullscreen')
     })
 
+    if (newTabButtonHasBeenCreated === false) {
+        addNewTabButton()
+        newTabButtonHasBeenCreated = true
+    }
     webviews.appendChild(webview)
     tabs_dom.appendChild(tab)
     const space = tabSpace.cloneNode(true)
@@ -152,9 +174,45 @@ const createBookmark = (title, url) => {
     bookmarks.appendChild(bookmarkSpace.cloneNode(true))
 }
 
-tabs.map((tab) => {
-    createNewTab(tab.index, tab.url, tab.title)
-})
+const addNewTabButton = () => {
+    const tab = document.createElement('div')
+    tab.role = 'button'
+    tab.classList = ['tab']
+    tab.innerHTML = '<i class="fas fa-plus"></i>'
+    tab.addEventListener('click', (event) => {
+        tabs = [...tabs, {
+            index: tabs.length,
+            url: newTabUrl,
+            title: 'New Tab'
+        }]
+        current_index = tabs.length - 1
+        createNewTab(current_index, newTabUrl, 'New Tab')
+        document.getElementById(`webview-${current_index}`).style.display = 'block'
+        // tabs_dom.removeChild(tab)
+        // tabs_dom.appendChild(tab)
+    })
+    
+    tabs_dom.appendChild(tab)
+    const space = tabSpace.cloneNode(true)
+    space.classList.add('tab-space')
+    tabs_dom.appendChild(space)
+}
+
+const updateTabsInitial = () => {
+    tabs_dom.innerHTML = ''
+    tabs.map((tab) => {
+        createNewTab(tab.index, tab.url, tab.title)
+    })
+}
+
+const updateTabs = () => {
+    updateTabsInitial()
+    // addNewTabButton()
+}
+
+const initalLoad = () => {
+    updateTabsInitial()
+}
 
 const tab = document.createElement('div')
 tab.role = 'button'
@@ -173,6 +231,8 @@ tab.addEventListener('click', (event) => {
     tabs_dom.appendChild(tab)
 })
 tabs_dom.appendChild(tab)
+
+initalLoad()
 
 // Add click events to nav-buttons
 backButton.addEventListener('click', (event) => {
@@ -351,3 +411,5 @@ bookmarkButton.addEventListener('click', (e) => {
 
     createBookmark(title, url)
 })
+
+

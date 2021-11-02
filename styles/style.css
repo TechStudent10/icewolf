@@ -64,6 +64,9 @@ body {
 /* Styles for tabs */
 .tabs {
 	-webkit-app-region: no-drag;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: 100%;
 }
 
 /* Styles for titlebar */
@@ -73,6 +76,8 @@ body {
 	justify-content: space-between;
 	padding-top: 10px;
 	-webkit-app-region: drag;
+	/* overflow-x: scroll;
+	overflow-y: hidden; */
 	/*background-color: gray;
 	height: calc(var(--tabsHeight) + 10px);*/
 }
@@ -97,7 +102,13 @@ body {
 }
 
 /* Styles for the navbar */
-.navbar {
+.navbar .tabs .tab,
+.navbar .addressBar, 
+.navbar .titlebar, 
+.navbar .bookmarks {
+	/* Why am I listing these? VSCode... */
+	-ms-user-select: none;
+	-webkit-user-select: none;
 	user-select: none;
 }
 
@@ -129,6 +140,11 @@ body {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	width: fit-content;
+}
+
+.tab.newTabButton {
+	position: fixed;
 }
 
 /* Styles for ACTUAL (not the new tab) tabs */

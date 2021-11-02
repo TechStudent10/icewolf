@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<title>IceWolf</title>
 		<link rel="stylesheet" type="text/css" href="./styles/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="shortcut" href="./images/logo-transparent.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
 		<div class="navbar">
 			<header class="titlebar">
 				<div class="tabs">
+					<div class="tab newTabButton" role="button" title="newTabButton">
+						<i class="fas fa-plus"></i>
+					</div>
 					<div class="space">
 						<hr>
 					</div>
@@ -80,7 +84,13 @@
 					<li class="menu-option">Inspect</li>
 				</ul>
 			</div> -->
-			<webview allowpopups useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.67" src="file:///icewolf/local-ntp.html" class="view" id='webview-base'></webview>
+			<webview
+				allowpopups
+				useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.67"
+				src="file:///icewolf/local-ntp.html"
+				class="view"
+				id='webview-base'
+			></webview>
 		</div>
 		<script type="text/javascript" src="./scripts/shortcut.js"></script>
 		<script type="text/javascript" src="./scripts/renderer.js"></script>

@@ -1,7 +1,7 @@
 {
   "name": "icewolf",
-  "version": "0.1.2",
-  "description": "web browser go brrr",
+  "version": "0.1.3",
+  "description": "A web browser built in Electron.",
   "main": "main.js",
   "author": "TechStudent11",
   "license": "MIT",

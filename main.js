@@ -4,7 +4,8 @@ const path = require('path')
 if (app.isPackaged) {
 	require('update-electron-app')()
 } else {
-	require('electron-reloader')(module)
+	// require('electron-reloader')(module)
+	console.log("You are in developer mode!")
 }
 
 let win
@@ -20,12 +21,12 @@ function createWindow() {
 			webviewTag: true,
 			enableRemoteModule: true,
 			contextIsolation: false,
-			preload: './preload.js'
+			preload: `${__dirname}/scripts/preload.js`
 		},
 		frame: false
 	})
 
-	// win.webContents.openDevTools()
+	win.webContents.openDevTools()
 
 	win.loadFile('index.html')
 
