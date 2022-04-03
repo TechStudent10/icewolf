@@ -6,7 +6,7 @@
   "author": "TechStudent11",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^13.3.0",
+    "electron": "^13.6.6",
     "electron-builder": "^22.11.7",
     "electron-reloader": "^1.2.1"
   },
