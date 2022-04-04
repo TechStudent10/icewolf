@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/TechStudent11/icewolf/blob/master/images/logo-transparent.png" alt="logo"></p>
+<p align="center"><img src="https://github.com/TechStudent11/icewolf/blob/master/images/logo-transparent.png" height="10" width="10" alt="logo"></p>
 
 # Icewolf
 The open-source web browser
